@@ -22,3 +22,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 配置npm run serve 自动打开浏览器
+"serve": "vue-cli-service serve --open",
