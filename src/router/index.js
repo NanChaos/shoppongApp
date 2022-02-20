@@ -12,26 +12,72 @@ import Search from "@/pages/Search";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 
+// backup
+let originPush = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace;
+// override push|replace
+VueRouter.prototype.push = function (location, resolve, reject) {
+    if (resolve && reject) {
+        originPush.call(
+            this,
+            location,
+            resolve,
+            reject
+        )
+    } else {
+        originPush.call(
+            this,
+            location,
+            () => {
+            },
+            () => {
+            }
+        )
+    }
+}
+VueRouter.prototype.replace = function (location, resolve, reject) {
+    if (resolve && reject) {
+        originReplace.call(this, location, resolve, reject)
+    } else {
+        originReplace.call(this, location, () => {}, () => {})
+    }
+}
+
 export default new VueRouter({
-	routes: [{
-			path: "/home",
-			component: Home
-		},
-		{
-			path: "/search",
-			component: Search
-		},
-		{
-			path: "/login",
-			component: Login
-		},
-		{
-			path: "/register",
-			component: Register
-		},
-		{
-			path: "*",
-			redirect: "/Home"
-		}
-	]
+    routes: [
+        {
+            path: "/home",
+            component: Home,
+            meta: {
+                show: true
+            }
+        },
+        {
+            // ？设置params参数可穿可不传
+            path: "/search/:keyword?",
+            component: Search,
+            meta: {
+                show: true
+            },
+            name: "search"
+        },
+        {
+            path: "/login",
+            component: Login,
+            meta: {
+                show: false
+            }
+        },
+        {
+            path: "/register",
+            component: Register,
+            meta: {
+                show: false
+            }
+        },
+        {
+            path: "*",
+            redirect: "/Home"
+        }
+    ]
 })

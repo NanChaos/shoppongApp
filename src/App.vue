@@ -3,12 +3,13 @@
     <Header></Header>
     <!--  路由组件出口的地方  -->
     <router-view></router-view>
-    <Footer></Footer>
+
+    <!--  在home search显示，在login register隐藏  -->
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/Header/index.vue'
 import Footer from './components/Footer/index.vue'
 
